@@ -5,7 +5,7 @@ action_endpoint:
 # localhost:8000 works both locally and in production.
 mcp_servers:
   - name: credit_agricole_mcp
-    url: http://localhost:8000/mcp
+    url: https://ectoparasitic-pregeological-velda.ngrok-free.dev/mcp
     type: http
 
 nlg:
