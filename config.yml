@@ -1,0 +1,23 @@
+# Main config file for Rasa Pro
+recipe: default.v1
+language: fr
+assistant_id: retail-banking-assistant
+
+pipeline:
+- name: NLUCommandAdapter
+- name: CompactLLMCommandGenerator
+  llm:
+    provider: openai
+    model: gpt-4o-2024-11-20
+    timeout: 7
+    temperature: 0.0
+    top_p: 0.0
+  prompt_template: prompts/command-generator.jinja2
+
+policies:
+- name: FlowPolicy
+- name: EnterpriseSearchPolicy
+  model: gpt-4o-mini
+  vector_store:
+    type: "faiss"
+    source: "./docs"

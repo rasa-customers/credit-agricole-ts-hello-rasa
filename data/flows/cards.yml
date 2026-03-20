@@ -1,0 +1,23 @@
+flows:
+
+  handle_card_questions:
+    description: >
+      Handle any question about the user's bank cards, including expiry dates,
+      active cards, credit limits, chip status, dark-web exposure,
+      card brands, and card types.
+    name: handle card questions
+    steps:
+      - call: cards_agent
+        exit_if:
+          - slots.cards_question_answered
+
+  handle_payment_questions:
+    description: >
+      Handle any question about the user's payment history, including
+      top spending cities, spending by merchant category, transaction amounts,
+      specific merchants, date ranges, and per-card usage.
+    name: handle payment questions
+    steps:
+      - call: payments_agent
+        exit_if:
+          - slots.payments_question_answered

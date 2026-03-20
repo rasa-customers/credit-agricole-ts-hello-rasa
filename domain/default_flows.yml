@@ -1,0 +1,163 @@
+version: "3.1"
+
+intents:
+  - welcomefr
+  - welcomeen
+  - welcomees
+  - welcomede
+  - welcomept
+  - help
+
+responses:
+  utter_greeting:
+    - text: "Salut ! Je suis Rasabot, votre assistant bancaire."
+      metadata:
+        rephrase: false
+
+  utter_help:
+    - text: "Je suis votre assistant bancaire. Je peux vous aider à transférer de l'argent, à gérer vos bénéficiaires, à vérifier le solde d'un compte, à bloquer une carte et à répondre à vos questions financières."
+      metadata:
+        rephrase: true
+
+  utter_show_greeting_accordion:
+    - custom:
+        type: "accordion"
+        elements:
+          - title: "Transfert d'argent"
+            text: "Je peux envoyer de l'argent à des amis, à la famille ou à des entreprises. Vous pouvez dire, 'envoyez 100 €' ou 'transférez depuis mon compte d'épargne.'"
+          - title: "Vérification du solde"
+            text: "Je peux vérifier le solde de votre compte. Par exemple, 'quel est le solde de mon compte courant ?' ou 'combien d'argent ai-je ?'."
+          - title: "Gestion des bénéficiaires"
+            text: "Je peux vous aider à gérer vos bénéficiaires, y compris ajouter de nouveaux bénéficiaires ou lister les existants. Par exemple, 'ajouter un nouveau bénéficiaire' ou 'montrez-moi mes bénéficiaires.'"
+          - title: "Blocage de carte"
+            text: "Je peux bloquer votre carte de façon permanente ou temporaire en cas de perte, de vol ou si vous voyagez. Dites-moi, 'bloquez ma carte' ou 'désactivez temporairement ma carte.'"
+          - title: "Questions bancaires"
+            text: "Je peux également répondre à vos questions générales sur les finances, comme comment contester un débit ou augmenter votre limite de crédit."
+
+  utter_chitchat:
+    - text: "Bonjour, comment puis-je vous aider aujourd'hui ?"
+      metadata:
+        rephrase: false
+
+  utter_flow_continue_interrupted:
+    - text: "Continuons là où nous nous étions arrêtés."
+      metadata:
+        template: jinja
+
+  utter_flow_cancelled_rasa:
+    - text: "Bien sûr, je vais arrêter le processus."
+      metadata:
+        template: jinja
+
+  utter_can_do_something_else:
+    - text: "Y a-t-il autre chose avec laquelle je peux vous aider ?"
+
+  utter_ask_rephrase:
+    - text: "Je suis désolé, je n'arrive pas à vous comprendre, pourriez-vous reformuler s'il vous plaît ?"
+      metadata:
+        rephrase: true
+
+  utter_ask_still_there:
+    - text: "Bonjour, êtes-vous toujours là ?"
+      metadata:
+        rephrase: true
+
+  utter_boolean_slot_rejection:
+    - text: "Désolé, la valeur que vous avez fournie, `{{value}}`, n'est pas valide. Veuillez répondre avec une valeur valide."
+      metadata:
+        rephrase: true
+        template: jinja
+
+  utter_corrected_previous_input:
+    - text: "Ok, je mets à jour {{ context.corrected_slots.keys()|join(', ') }} par {{ context.new_slot_values | join(', ') }}."
+      metadata:
+        rephrase: true
+        template: jinja
+
+  utter_float_slot_rejection:
+    - text: "Désolé, il semble que la valeur que vous avez fournie `{{value}}` ne soit pas un nombre valide. Veuillez fournir un nombre valide dans votre réponse."
+      metadata:
+        rephrase: true
+        template: jinja
+
+  utter_free_chitchat_response:
+    - text: "Désolé, je ne suis pas en mesure de répondre à cette question pour le moment."
+      metadata:
+        rephrase: true
+        rephrase_prompt: |
+          You are an incredibly friendly assistant. Generate a short
+          response to the user's comment in French (français).
+          User: {{current_input}}
+          Response:
+        template: jinja
+
+  utter_human_handoff_not_available:
+    - text: "Je comprends que vous souhaitiez être connecté à un agent humain, mais c'est quelque chose pour lequel je ne peux pas vous aider pour le moment. Y a-t-il autre chose pour laquelle je peux vous aider ?"
+      metadata:
+        rephrase: true
+
+  utter_inform_code_change:
+    - text: "Une mise à jour a été apportée à mon code. Je dois terminer notre dialogue en cours et recommencer à zéro."
+      metadata:
+        rephrase: true
+
+  utter_inform_hangup:
+    - text: "Il semblerait que vous ne soyez plus là. Je vais raccrocher dans quelques instants."
+      metadata:
+        rephrase: true
+
+  utter_internal_error_rasa:
+    - text: "Désolé, j'ai des problèmes avec ça. Veuillez réessayer dans quelques minutes."
+      metadata:
+        template: jinja
+        rephrase: true
+
+  utter_no_knowledge_base:
+    - text: "Je crains de ne pas connaître la réponse. À ce stade, je n'ai pas accès à une base de connaissances."
+      metadata:
+        rephrase: true
+
+  utter_skip_question_answer:
+    - text: "Je suis là pour vous apporter la meilleure assistance possible et pour ce faire, je vous demande de bien vouloir réaliser cette étape ensemble. Votre contribution est essentielle pour une expérience fluide !"
+      metadata:
+        rephrase: true
+
+  utter_user_input_empty_error_rasa:
+    - text: "Je vois un message vide. Que puis-je faire pour vous aider ?"
+      metadata:
+        template: jinja
+        rephrase: true
+
+  utter_user_input_too_long_error_rasa:
+    - text: "Je suis désolé, mais votre message est trop long pour que je puisse le traiter. Veuillez garder votre message concis et dans la limite de {% if context.info.max_characters %}{{context.info.max_characters}} caractères.{% else %}une longueur raisonnable.{% endif %}"
+      metadata:
+        template: jinja
+        rephrase: true
+
+  utter_ask_continue_interrupted_flow_confirmation:
+    - text: "Que puis-je faire d'autre pour vous aider ?"
+      metadata:
+        rephrase: false
+
+  utter_ask_interrupted_flow_to_continue:
+    - text: "Que puis-je faire d'autre pour vous aider ?"
+      metadata:
+        rephrase: false
+
+  utter_override_cannot_handle:
+    - text: "Je ne peux pas vous aider avec cette demande pour le moment. Voici ce que je sais faire : consulter vos cartes bancaires, analyser vos transactions et paiements, mettre à jour votre adresse postale, afficher vos informations personnelles, et répondre à vos questions sur l'épargne, le crédit, l'assurance, la fiscalité, le budget et les moyens de paiement."
+      metadata:
+        template: jinja
+        rephrase: false
+
+  utter_categorical_slot_rejection:
+    - text: "Il semble que vous n'ayez sélectionné aucune des options disponibles actuellement dans cette démo limitée. Pour continuer, sélectionnez simplement l'une des options proposées. Une fois la version complète de Rasa installée, vous aurez un contrôle total sur toutes les compétences, intégrations et réponses. Tout est possible."
+      metadata:
+        rephrase: false
+        template: jinja
+
+  utter_clarification_options_rasa:
+    - text: "Je peux vous aider, mais j'ai besoin de plus d'informations. Laquelle de ces opérations souhaitez-vous effectuer : {{ context.clarification_options }} ?"
+      metadata:
+        rephrase: true
+        template: jinja

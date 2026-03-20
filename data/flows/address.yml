@@ -1,0 +1,25 @@
+flows:
+
+  update_address:
+    description: >
+      Allow the user to update their postal address. Use this flow when the user
+      wants to change, modify, or update their home address, postal address,
+      or place of residence.
+    name: update address
+    steps:
+      - collect: physical_address
+        description: The new full postal address the user wants to register
+        ask_before_filling: true
+      - action: utter_confirm_address
+      - collect: address_update_confirmed
+        description: Whether the user confirms the new address
+        ask_before_filling: true
+      - noop: true
+        next:
+          - if: slots.address_update_confirmed
+            then:
+              - action: action_update_address
+                next: END
+          - else:
+              - action: utter_address_update_cancelled
+                next: END

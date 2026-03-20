@@ -1,0 +1,49 @@
+version: "3.1"
+
+slots:
+  address_update_confirmed:
+    type: bool
+    mappings:
+      - type: from_llm
+
+responses:
+  utter_ask_physical_address:
+    - text: "Quelle est votre nouvelle adresse postale ?"
+      metadata:
+        rephrase: false
+
+  utter_confirm_address:
+    - text: "Vous souhaitez enregistrer l'adresse suivante : **{{ physical_address }}**. Est-ce correct ?"
+      metadata:
+        rephrase: false
+        template: jinja
+
+  utter_ask_address_update_confirmed:
+    - text: "Confirmez-vous ce changement d'adresse ?"
+      buttons:
+        - title: "Oui, confirmer"
+          payload: "/SetSlots(address_update_confirmed=true)"
+        - title: "Non, annuler"
+          payload: "/SetSlots(address_update_confirmed=false)"
+      metadata:
+        rephrase: false
+
+  utter_address_update_success:
+    - text: "Votre adresse a bien été mise à jour."
+      metadata:
+        rephrase: true
+
+  utter_address_update_cancelled:
+    - text: "Modification annulée. Votre adresse n'a pas été changée."
+      metadata:
+        rephrase: true
+
+  utter_address_update_error:
+    - text: "Une erreur s'est produite lors de la mise à jour de votre adresse. Veuillez réessayer."
+      metadata:
+        rephrase: true
+
+  utter_profile_error:
+    - text: "Une erreur s'est produite lors de la récupération de vos informations. Veuillez réessayer."
+      metadata:
+        rephrase: true

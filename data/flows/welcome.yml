@@ -1,0 +1,78 @@
+flows:
+  help:
+    description: |
+      This flow addresses user inquiries about the assistant's capabilities.
+      It starts by acknowledging the user's request and providing a clear overview of
+      key skills and services. This helps users understand how the assistant can assist
+      them effectively.  This flow should also be used to reply to Hello or Hi and other greetings.
+    nlu_trigger:
+        - intent: greet
+        - intent: help
+    name: help_you
+    steps:
+      - action: utter_help
+  welcome_fr:
+    description: Flow for starting the conversation in french.  This flow can only be called at the start of the conversation. This flow should be be called for a greeting.
+    name: welcome_fr
+    nlu_trigger:
+      - intent: welcomefr
+        confidence_threshold: 1.0
+    persisted_slots:
+      - language
+    steps:
+      - set_slots:
+        - language: "fr"
+      - action: utter_greeting
+      - action: utter_show_greeting_accordion
+  welcome_en:
+    description: Flow for starting the conversation in english. This flow can only be called at the start of the conversation. This flow should be be called for a greeting.
+    name: welcome_en
+    nlu_trigger:
+      - intent: welcomeen
+        confidence_threshold: 1.0
+    persisted_slots:
+      - language
+    steps:
+      - set_slots:
+        - language: "en"
+      - action: utter_greeting
+      - action: utter_show_greeting_accordion
+  welcome_es:
+    description: Flow for starting the conversation in spanish. This flow can only be called at the start of the conversation. This flow should be be called for a greeting.
+    name: welcome_es
+    nlu_trigger:
+      - intent: welcomees
+        confidence_threshold: 1.0
+    persisted_slots:
+      - language
+    steps:
+      - set_slots:
+        - language: "es"
+      - action: utter_greeting
+      - action: utter_show_greeting_accordion
+  welcome_de:
+    description: Flow for starting the conversation in german or deutsch. This flow can only be called at the start of the conversation. This flow should be be called for a greeting.
+    name: welcome_de
+    nlu_trigger:
+      - intent: welcomede
+        confidence_threshold: 1.0
+    persisted_slots:
+      - language
+    steps:
+      - set_slots:
+        - language: "de"
+      - action: utter_greeting
+      - action: utter_show_greeting_accordion
+  welcome_pt:
+    description: Flow for starting the conversation in portuguese. This flow can only be called at the start of the conversation. This flow should be be called for a greeting.
+    name: welcome_pt
+    nlu_trigger:
+      - intent: welcomept
+        confidence_threshold: 1.0
+    persisted_slots:
+      - language
+    steps:
+      - set_slots:
+        - language: "pt"
+      - action: utter_greeting
+      - action: utter_show_greeting_accordion

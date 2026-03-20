@@ -1,0 +1,46 @@
+flows:
+  pattern_search:
+    description: >
+      Answer any informational or advisory question about personal finance and banking
+      topics covered in the Crédit Agricole knowledge base: savings (épargne), credit
+      and loans (crédit, prêt), insurance (assurance), budget management (budget),
+      payment methods (moyens de paiement, virement, chèque), taxation (fiscalité,
+      impôts, déclaration), and financial trends (tendances, marchés, placements).
+      Use this for any question that starts with "comment", "qu'est-ce que", "quels sont",
+      "combien", "pourquoi", "c'est quoi", or any question seeking financial advice or
+      explanations — even if the answer is not certain to be in the knowledge base.
+      Do NOT use for questions about the user's own cards or transactions (handled by
+      dedicated flows).
+    steps:
+      - action: action_trigger_search
+
+  pattern_chitchat:
+    description: >
+      Handle purely social messages with no financial or banking content whatsoever:
+      greetings (bonjour, salut), farewells (au revoir), expressions of thanks (merci),
+      and casual small talk completely unrelated to money, banking, or Crédit Agricole.
+      Do NOT use this for any question that could relate to finance, savings, credit,
+      insurance, taxes, or banking services — use pattern_search instead.
+    # nlu_trigger:
+    #     - intent: greet
+    steps:
+      - action: utter_override_cannot_handle
+
+  pattern_session_start:
+    description: Flow for starting the conversation
+    name: pattern session start
+    nlu_trigger:
+        - intent: session_start
+    steps:
+      - action: utter_greeting
+
+  pattern_completed:
+    description: A flow has been completed and there is nothing else to be done
+    steps:
+      - noop: true
+        next:
+          - if: context.previous_flow_name != "welcome_en" and context.previous_flow_name != "welcome_fr" and context.previous_flow_name != "welcome_es" and context.previous_flow_name != "welcome_pt" and context.previous_flow_name != "welcome_de" and context.previous_flow_name != "help_you"
+            then:
+              - action: utter_can_do_something_else
+                next: END
+          - else: END

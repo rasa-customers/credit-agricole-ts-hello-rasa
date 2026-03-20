@@ -1,0 +1,23 @@
+agent:
+  name: cards_agent
+  description: >
+    Answers any question about the user's bank cards:
+    active cards, expiry dates, credit limits, chip status,
+    dark-web exposure, card brands, and card types.
+
+configuration:
+  llm:
+    provider: openai
+    model: gpt-4o-2024-11-20
+    temperature: 0.0
+    top_p: 0.0
+  prompt_template: sub_agents/cards_agent/prompt_template.jinja2
+  include_date_time: true
+  timezone: "Europe/Paris"
+
+connections:
+  mcp_servers:
+    - name: credit_agricole_mcp
+      include_tools:
+        - get_cards
+        - get_user

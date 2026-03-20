@@ -1,0 +1,32 @@
+action_endpoint:
+  actions_module: "actions"
+
+# MCP server runs as a sidecar in the same pod (additionalContainers) →
+# localhost:8000 works both locally and in production.
+mcp_servers:
+  - name: credit_agricole_mcp
+    url: http://localhost:8000/mcp
+    type: http
+
+nlg:
+  type: rephrase
+  llm:
+    provider: openai
+    model: gpt-3.5-turbo
+    temperature: 0.1
+  prompt: prompts/rephraser_moad_personality_prompt.jinja2
+  rephrase_all: False
+
+# model_groups:
+#   - id: openai-direct-gpt-4o
+#     models:
+#       - provider: openai
+#         model: gpt-4o-2024-11-20
+#         timeout: 7
+#         temperature: 0.0
+#         top_p: 0.0
+#   - id: gpt-3.5-turbo-openai-model
+#     models:
+#       - provider: openai
+#         model: gpt-3.5-turbo
+#         temperature: 0.1

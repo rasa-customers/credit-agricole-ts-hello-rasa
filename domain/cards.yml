@@ -1,0 +1,17 @@
+version: "3.1"
+
+slots:
+  # Numeric client ID mapping to the MCP datasets (cards_demo, transactions_demo).
+  # Set by action_session_start from channel metadata; falls back to 825 (demo user).
+  mcp_client_id:
+    type: float
+    mappings:
+      - type: custom
+
+  cards_question_answered:
+    type: bool
+    initial_value: false
+  payments_question_answered:
+    type: bool
+    initial_value: false
+

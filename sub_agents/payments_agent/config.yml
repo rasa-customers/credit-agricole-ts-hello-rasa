@@ -1,0 +1,23 @@
+agent:
+  name: payments_agent
+  description: >
+    Answers any question about the user's payment history:
+    top spending cities, spending by merchant category, transaction amounts,
+    specific merchants, date ranges, and per-card usage statistics.
+
+configuration:
+  llm:
+    provider: openai
+    model: gpt-4o-2024-11-20
+    temperature: 0.0
+    top_p: 0.0
+  prompt_template: sub_agents/payments_agent/prompt_template.jinja2
+  include_date_time: true
+  timezone: "Europe/Paris"
+
+connections:
+  mcp_servers:
+    - name: credit_agricole_mcp
+      include_tools:
+        - get_payments
+        - get_user

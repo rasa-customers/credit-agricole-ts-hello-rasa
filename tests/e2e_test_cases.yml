@@ -1,0 +1,109 @@
+test_cases:
+  - test_case: user is greeted by the assistant
+    steps:
+    - user: /welcome
+    - utter: utter_greeting
+  - test_case: block a card
+    steps:
+    - user: "block a card"
+    - utter: utter_block_card_understand
+    - bot: "Select the card you require assistance with:"
+    - user: "1234567812345678"
+    - utter: utter_ask_reason_for_blocking
+    - user: "/SetSlots(reason_for_blocking=lost)"
+    - utter: utter_acknowledge_reason_fraud_stolen_lost
+    - utter: utter_card_blocked
+    - utter: utter_ask_confirm_issue_new_card
+    - user: "/SetSlots(confirm_issue_new_card=true)"
+    - utter: utter_ask_address_confirmed
+    - user: "/SetSlots(address_confirmed=True)"
+    - utter: utter_confirm_physical_address
+  - test_case: report a fraud
+    steps:
+    - user: "I want to report fraud"
+    - utter: utter_block_card_understand
+    - bot: "Select the card you require assistance with:"
+    - user: "1111222233334444"
+    - slot_was_set:
+      - reason_for_blocking_en: a potential fraud on your card, we will block your card
+    - utter: utter_acknowledge_reason_fraud_stolen_lost
+    - utter: utter_card_blocked
+    - utter: utter_ask_confirm_issue_new_card
+    - user: "/SetSlots(confirm_issue_new_card=true)"
+    - utter: utter_ask_address_confirmed
+    - user: "/SetSlots(address_confirmed=True)"
+    - utter: utter_confirm_physical_address
+  - test_case: lost a card
+    steps:
+    - user: "I lost my card"
+    - utter: utter_block_card_understand
+    - bot: "Select the card you require assistance with:"
+    - user: "2222333344445555"
+    - utter: utter_acknowledge_reason_fraud_stolen_lost
+    - utter: utter_card_blocked
+    - utter: utter_ask_confirm_issue_new_card
+    - user: "/SetSlots(confirm_issue_new_card=false)"
+
+  #=======================================================#
+  - test_case: add a payee
+    steps:
+    - user: "add a payee"
+    - utter: utter_ask_payee_name
+    - user: "Max"
+    - utter: utter_ask_account_number
+    - user: "12312312"
+    - utter: utter_ask_payee_type
+    - user: "/SetSlots(payee_type=person)"
+    - utter: utter_ask_reference
+    - user: "John"
+    - utter: utter_ask_confirm_payee_details
+    - user: "/SetSlots(confirm_payee_details=True)"
+    - utter: utter_payee_added_success
+  - test_case: add John payee
+    steps:
+    - user: "add John as payee"
+    - utter: utter_ask_account_number
+    - user: "232323"
+    - utter: utter_ask_payee_type
+    - user: "/SetSlots(payee_type=business)"
+    - utter: utter_ask_reference
+    - user: "Peter"
+    - utter: utter_ask_confirm_payee_details
+    - user: "/SetSlots(confirm_payee_details=True)"
+    - utter: utter_payee_added_success
+    #=====================================================#
+  - test_case: pattern human handoff
+    steps:
+    - user: "add a payee"
+    - utter: utter_ask_payee_name
+    - user: "Mark"
+    - utter: utter_ask_account_number
+    - user: "123123123"
+    - utter: utter_ask_payee_type
+    - user: "/SetSlots(payee_type=person)"
+    - utter: utter_ask_reference
+    - user: "I want to talk to human"
+    - utter: utter_human_handoff_not_available
+    - utter: utter_ask_reference
+  - test_case: pattern correction
+    steps:
+    - user: "send money"
+    - bot: "Which account would you like to transfer money from?"
+    - user: "12345678"
+    - utter: utter_ask_payee_name
+    - user: "Michael"
+    - bot: "Michael is not an authorised payee. Let's add them!"
+    - utter: utter_ask_account_number
+    - user: "sorry I meant Nicolas"
+    - utter: utter_corrected_previous_input
+    - bot: "Nicolas is not an authorised payee. Let's add them!"
+    - utter: utter_ask_account_number
+    - user: "11111111"
+    - utter: utter_ask_payee_type
+    - user: "/SetSlots(payee_type=person)"
+    - utter: utter_ask_reference
+    - user: "Bob"
+    - utter: utter_ask_confirm_payee_details
+    - user: "/SetSlots(confirm_payee_details=True)"
+    - utter: utter_payee_added_success
+    - utter: utter_ask_amount

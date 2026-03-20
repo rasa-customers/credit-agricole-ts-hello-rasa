@@ -1,0 +1,10 @@
+flows:
+
+  view_profile:
+    description: >
+      Show the user their current personal information: address, age, gender,
+      annual income, credit score, and number of bank cards. Use this flow when
+      the user wants to see, consult, or check their personal data or profile.
+    name: view profile
+    steps:
+      - action: action_get_profile
